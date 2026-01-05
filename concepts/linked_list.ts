@@ -21,7 +21,7 @@ class LinkedList<T> {
     const node = new Node(data);
     if (!this.head) {
       this.head = node;
-      return
+      return;
     }
 
     let current = this.head;
@@ -63,9 +63,9 @@ class LinkedList<T> {
 
   removeLast() {
     if (!this.head) return;
-    if(!this.head.next){
-      this.head=null
-      return
+    if (!this.head.next) {
+      this.head = null;
+      return;
     }
     let current = this.head;
     while (current.next?.next) {
@@ -90,20 +90,70 @@ class LinkedList<T> {
     }
   }
 
-  print(){
-    let current = this.head
-    while(current){
-      console.info(current.data)
-      current = current.next
+  print() {
+    let current = this.head;
+    while (current) {
+      console.info(current.data);
+      current = current.next;
     }
   }
 }
 
+const numbers = new LinkedList<number>();
+numbers.addFirst(0);
+numbers.addFirst(1);
+numbers.addLast(2);
+numbers.addLast(3);
 
+// tests
+// console.assert(numbers.size()===4)
+// get element by value
 
-const numbers = new LinkedList<number>()
-numbers.addFirst(0)
-numbers.addFirst(2)
-numbers.addLast(4)
-numbers.removeAt(1)
-numbers.print()
+// function get_node_by_value<T>(value:T ,  head:Node<T>):Node<T>|null{
+//   let current = head
+//   while(current.next){
+//     if(current.data === value){
+//       return current
+//     }
+//     current = current.next!
+//   }
+//   return null
+// }
+
+// console.assert(get_node_by_value(0 , numbers.head!))
+// console.assert(!get_node_by_value(4, numbers.head!))
+
+// function getNthFromStart(idx:number){
+//   let current = numbers.head
+//   if(!current || idx<0) return null
+//   for(let i = 0 ; i<idx ; i++){
+//     if(current.next instanceof Node ){
+//       current = current.next
+//     }else{
+//       return null
+//     }
+//   }
+//   return current
+// }
+
+// console.assert(getNthFromStart(2))
+
+function getNthFromEnd<T>(idx: number, list: LinkedList<T>) {
+  let current = list.head;
+  let listSize = list.size() 
+  if (idx > listSize || !current || idx < 0) {
+    return null;
+  }
+  
+  for (let i = 0; i < listSize - idx  ; i++) {
+    current = current!.next
+  }
+  return current
+}
+
+// console.assert(getNthFromEnd(1 , numbers)?.data===2)
+// console.assert(getNthFromEnd(0 , numbers)?.data===3)
+// console.log(getNthFromEnd(4 , numbers))
+// console.log(getNthFromEnd(5 , numbers))
+// console.log(getNthFromEnd(0 , numbers)?.data)
+
